@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"  %>
+<%  System.out.println(request.getParameter("term") + "이 요청됨");  %>
 [
 	{
 		"id":"mysql",
