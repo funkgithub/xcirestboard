@@ -12,7 +12,7 @@
 	  $('#mybutton').click(function(){
 		  $.ajax({
 			  method: $('#mymethod').val(),
-			  url: '<c:url value="/rest/" />'
+			  url: '<c:url value="/rest2/" />'
 			})
 			  .done(function( msg ) {
 			    alert( "Data Get: " + msg );
