@@ -18,7 +18,8 @@
 		p:driverClassName="${driver}"
 		p:maximumPoolSize="20"
 		/>
- 		
+ 	
+ 	<!-- boardDAO start -->
 	<bean
 		id="boardSqlSession" class="org.mybatis.spring.SqlSessionFactoryBean" 
 		p:dataSource-ref="dataSource"
@@ -31,5 +32,33 @@
 		p:sqlSessionFactory-ref="boardSqlSession"
 		p:mapperInterface="net.developia.board.dao.BoardDAO"
 		/>
+ 	<!-- boardDAO end -->
+
+
+ 	<!-- componentDAO start -->
+	<bean
+		id="componentSession" class="org.mybatis.spring.SqlSessionFactoryBean" 
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="net.developia.board.jqueryui"
+		/> 
+
+	<bean
+		id="componentDAO" 
+		class="org.mybatis.spring.mapper.MapperFactoryBean" 
+		p:sqlSessionFactory-ref="componentSession"
+		p:mapperInterface="net.developia.board.jqueryui.ComponentDAO"
+		/>
+	<!-- componentDAO end -->
+		
+		
+	<!-- userDAO start -->
+	<bean id="userSqlSession" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="net.developia.board.dto" />
+	
+	<bean id="userDAO" class="org.mybatis.spring.mapper.MapperFactoryBean" 
+		p:sqlSessionFactory-ref="userSqlSession"
+		p:mapperInterface="net.developia.board.dao.UserDAO" />
+	<!-- userDAO end -->
 		
 </beans>

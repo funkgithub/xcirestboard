@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.developia.board.jqueryui.ComponentDAO">
+	<select id="getWords" parameterType="String" resultType="ItemVO">
+	select id, label, value
+	from t_autocomplete 
+	where id like '%' || #{term} || '%' 
+	</select>
+
+</mapper>
