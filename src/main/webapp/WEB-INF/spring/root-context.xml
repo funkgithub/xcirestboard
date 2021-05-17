@@ -19,22 +19,6 @@
 		p:maximumPoolSize="20"
 		/>
  	
- 	<!-- boardDAO start -->
-	<bean
-		id="boardSqlSession" class="org.mybatis.spring.SqlSessionFactoryBean" 
-		p:dataSource-ref="dataSource"
-		p:typeAliasesPackage="net.developia.board.dto"
-		/> 
-		<!-- p:configLocation="classpath:/mybatis/SqlMapConfig.xml" -->
-	<bean
-		id="boardDAO" 
-		class="org.mybatis.spring.mapper.MapperFactoryBean" 
-		p:sqlSessionFactory-ref="boardSqlSession"
-		p:mapperInterface="net.developia.board.dao.BoardDAO"
-		/>
- 	<!-- boardDAO end -->
-
-
  	<!-- componentDAO start -->
 	<bean
 		id="componentSession" class="org.mybatis.spring.SqlSessionFactoryBean" 
@@ -60,5 +44,19 @@
 		p:sqlSessionFactory-ref="userSqlSession"
 		p:mapperInterface="net.developia.board.dao.UserDAO" />
 	<!-- userDAO end -->
+	
+	
+
+	<!-- boardDAO start -->
+	<bean id="boardSqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="net.developia.board.dto" />
+
+	<bean id="boardDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="boardSqlSession"
+		p:mapperInterface="net.developia.board.dao.BoardDAO" />
+	<!-- boardDAO end -->
 		
 </beans>
