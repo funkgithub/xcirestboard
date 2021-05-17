@@ -17,4 +17,6 @@ public interface BoardService {
 
 	List<ArticleDTO> getArticleList(int boa_no) throws Exception;
 
+	ArticleDTO getDetail(long art_no) throws Exception;
+
 }

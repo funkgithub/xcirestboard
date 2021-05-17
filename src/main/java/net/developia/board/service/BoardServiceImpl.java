@@ -72,4 +72,19 @@ public class BoardServiceImpl implements BoardService {
 			throw e;
 		}
 	}
+	
+	@Override
+	public ArticleDTO getDetail(long art_no) throws Exception {
+		try {
+			ArticleDTO articleDTO = boardDAO.getDetail(art_no);
+			if (articleDTO == null) {
+				throw new RuntimeException(art_no + "번 글이 존재하지 않습니다.");
+			}
+			return articleDTO;
+		} catch (Exception e) {
+			log.info(e.getMessage());
+			throw e;
+		}
+	}
+
 }
