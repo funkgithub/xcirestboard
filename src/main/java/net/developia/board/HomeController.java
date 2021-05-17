@@ -35,7 +35,7 @@ public class HomeController {
 		log.info(DigestUtils.sha512Hex("1111"));
 		
 		
-		return "home";
+		return "redirect:user/";
 	}
 	
 }

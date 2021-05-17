@@ -1,11 +1,21 @@
 package net.developia.board.web;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
+import net.developia.board.dto.BoardDTO;
+import net.developia.board.dto.UserDTO;
 import net.developia.board.service.BoardService;
 
 @Slf4j
@@ -21,17 +31,38 @@ public class BoardController {
 		return "redirect:board/";
 	}
 	
-	@GetMapping(value= {"/"})
-	public String list2() {
-		
-		
-		
+	@GetMapping("/")
+	public String list(Model model) {
+		try {
+			List<BoardDTO> list = boardService.getBoardList();
+			model.addAttribute("list", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "board/board_list";
 	}
+
 	
-/*	@GetMapping("insert")
-	public void insert() {}
-	
+	@GetMapping("insert")
+	public String insert() {
+		return "board/board_insert";
+	}
+		
 	@PostMapping("insert")
-	public void insert(@ModelAttribute BoardDTO boardDTO) {} */
+	public ModelAndView insert(@ModelAttribute BoardDTO boardDTO, HttpSession session) {
+		boardDTO.setUserDTO((UserDTO)session.getAttribute("userInfo"));
+		try {
+			boardService.insertBoard(boardDTO);
+			ModelAndView mav = new ModelAndView("result");
+			mav.addObject("msg", boardDTO.getBoa_name() + "이 생성되었습니다.");
+			mav.addObject("url", "./");
+			return mav;
+		} catch (Exception e) {
+			e.printStackTrace();
+			ModelAndView mav = new ModelAndView("result");
+			mav.addObject("msg", boardDTO.getBoa_name() + "생성 실패");
+			mav.addObject("url", "./");
+			return mav;
+		}
+	}
 }
