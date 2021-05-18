@@ -22,5 +22,7 @@ public interface BoardDAO {
 
 	int deleteArticle(ArticleDTO articleDTO) throws SQLException;
 
+	int updateArticle(ArticleDTO articleDTO) throws SQLException;
+
 
 }

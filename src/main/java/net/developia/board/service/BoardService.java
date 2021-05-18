@@ -21,4 +21,6 @@ public interface BoardService {
 
 	void deleteArticle(ArticleDTO articleDTO) throws Exception;
 
+	void updateDetail(ArticleDTO articleDTO) throws Exception;
+
 }

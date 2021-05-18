@@ -64,4 +64,11 @@
 	delete t_article
 	where  art_no = #{art_no} and usr_no = #{userDTO.usr_no}
 	</delete>
+	
+	<update id="updateArticle" parameterType="ArticleDTO">
+	update  t_article set
+			art_title   = #{art_title},
+			art_content = #{art_content}
+	where   art_no = #{art_no} and usr_no = #{userDTO.usr_no}
+	</update>
 </mapper>

@@ -99,4 +99,16 @@ public class BoardServiceImpl implements BoardService {
 		}
 	}
 
+	public void updateDetail(ArticleDTO articleDTO) throws Exception {
+		
+		try {
+			if (boardDAO.updateArticle(articleDTO) == 0) {
+				throw new RuntimeException("존재하지 않거나 접근 권한이 없습니다.");
+			}
+		} catch (Exception e) {
+			log.info(e.toString());
+			throw e;
+		}
+	}
+
 }
