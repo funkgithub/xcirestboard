@@ -19,4 +19,6 @@ public interface BoardService {
 
 	ArticleDTO getDetail(long art_no) throws Exception;
 
+	void deleteArticle(ArticleDTO articleDTO) throws Exception;
+
 }

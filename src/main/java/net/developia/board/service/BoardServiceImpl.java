@@ -87,4 +87,16 @@ public class BoardServiceImpl implements BoardService {
 		}
 	}
 
+	@Override
+	public void deleteArticle(ArticleDTO articleDTO) throws Exception {
+		try {
+			if (boardDAO.deleteArticle(articleDTO) == 0) {
+				throw new RuntimeException("존재하지 않거나 접근 권한이 없습니다.");
+			}
+		} catch (Exception e) {
+			log.info(e.getMessage());
+			throw e;
+		}
+	}
+
 }
