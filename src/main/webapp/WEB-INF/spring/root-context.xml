@@ -2,9 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<bean 
+		id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
+		p:dataSource-ref="dataSource"
+		/>
+		
 	<bean 
  		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
 		p:location="/WEB-INF/spring/database.properties" />
@@ -58,5 +67,20 @@
 		p:sqlSessionFactory-ref="boardSqlSession"
 		p:mapperInterface="net.developia.board.dao.BoardDAO" />
 	<!-- boardDAO end -->
+		
+		
+	<!-- transaction test start -->
+	
+	<bean id="accountSqlSession" 
+		class="org.mybatis.spring.SqlSessionFactoryBean" 
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="net.developia.board.tx" />
+		
+	<bean id="accountDAO" 
+		class="org.mybatis.spring.mapper.MapperFactoryBean" 
+		p:sqlSessionFactory-ref="accountSqlSession"
+		p:mapperInterface="net.developia.board.tx.AccountDAO" />
+	<!-- transaction test end -->
+
 		
 </beans>

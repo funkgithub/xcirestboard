@@ -6,14 +6,17 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
 import net.developia.board.dao.BoardDAO;
 import net.developia.board.dto.ArticleDTO;
 import net.developia.board.dto.BoardDTO;
+import net.developia.board.dto.CommentDTO;
 
 @Slf4j
 @Service
+//@Transactional(propagation = Propagation.REQUIRED)
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
@@ -40,8 +43,11 @@ public class BoardServiceImpl implements BoardService {
 		}
 	}
 
+	@Transactional(rollbackFor = {Exception.class})
 	public void insertArticle(ArticleDTO articleDTO) throws Exception {
 		try {
+			boardDAO.insertArticle(articleDTO);
+			if (true) throw new RuntimeException("테스트 예외상황 발생!!!");
 			boardDAO.insertArticle(articleDTO);
 		} catch(Exception e) {
 			log.info(e.getMessage());
@@ -106,6 +112,49 @@ public class BoardServiceImpl implements BoardService {
 				throw new RuntimeException("존재하지 않거나 접근 권한이 없습니다.");
 			}
 		} catch (Exception e) {
+			log.info(e.toString());
+			throw e;
+		}
+	}
+
+	@Override
+	public void insertComment(CommentDTO commentDTO) throws Exception {
+		try {
+			boardDAO.insertComment(commentDTO);
+		} catch(Exception e) {
+			log.info(e.toString());
+			throw e;
+		}
+	}
+	
+	@Override
+	public List<CommentDTO> getCommentList(CommentDTO commentDTO)
+		throws Exception {
+		try {
+			return boardDAO.getCommentList(commentDTO);
+		} catch(Exception e) {
+			log.info(e.toString());
+			throw e;
+		}		
+	}
+
+	@Override
+	public void deleteComment(CommentDTO commentDTO) throws Exception {
+		try {
+			boardDAO.deleteComment(commentDTO);
+		} catch(Exception e) {
+			log.info(e.toString());
+			throw e;
+		}
+	}
+	
+	@Override
+	public void updateComment(CommentDTO commentDTO) throws Exception {
+		try {
+			if (boardDAO.updateComment(commentDTO) == 0) {
+				throw new RuntimeException("댓글 수정 실패");
+			}
+		} catch(Exception e) {
 			log.info(e.toString());
 			throw e;
 		}
