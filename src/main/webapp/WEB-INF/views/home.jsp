@@ -1,7 +1,7 @@
 <%@page import="net.developia.board.dto.UserDTO"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" contentType="text/html; charset=UTF-8"%>
-<%
+<%--
 	UserDTO userInfo = new UserDTO();
 	userInfo.setUsr_id("taiji");
 	userInfo.setUsr_name("서태지");
@@ -11,7 +11,7 @@
 	
 	session.setAttribute("userInfo", userInfo);
 	response.sendRedirect("board/130/1/");
-%>
+--%>
 <html>
 <head>
 	<title>Home</title>
@@ -20,7 +20,11 @@
 <h1>
 	Hello world!  
 </h1>
+	<form:form action="${pageContext.request.contextPath}/user/logout"
+		method="POST">
+		<input type="submit" value="로그아웃" />
+	</form:form>
 
-<P>  The time on the server is ${serverTime}. </P>
+	<P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>
