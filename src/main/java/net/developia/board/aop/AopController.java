@@ -2,8 +2,6 @@ package net.developia.board.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
@@ -16,19 +14,19 @@ import net.developia.board.dto.UserDTO;
 @Component
 public class AopController {
 
-	@Before("execution(* net.developia.board.*.UserController.login2())")
+	//@Before("execution(* net.developia.board.*.UserController.login2())")
 	public void ad_before() {
 		log.info("🤟🤟🤟🤟🤟 before advice 수행중~ 🤟🤟🤟🤟🤟");
 	}
 	
-	@After("execution(* net.developia.*.*.UserController.login2())")
+	//@After("execution(* net.developia.*.*.UserController.login2())")
 	public void ad_after() {
 		log.info("★★★★★★★★★★★");
 		log.info("★   after advice   ★");
 		log.info("★★★★★★★★★★★");
 	}
 
-	@Around("execution(* net.developia.*.*.UserController.login(..))")
+	//@Around("execution(* net.developia.*.*.UserController.login(..))")
 	public Object ad_around(ProceedingJoinPoint joinPoint) {
 		log.info("★★★★★★★★★★★★★★★");
 		log.info("★   around (before) advice ★");

@@ -27,7 +27,8 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping
-	public String list() {
+	public String list(HttpSession session) {
+		log.info(session.getAttribute("userInfo").toString());
 		return "redirect:board/";
 	}
 	

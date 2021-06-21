@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,7 +33,7 @@ public class UserController {
 		return "user/login";
 	}
 
-	@PostMapping()
+	@RequestMapping(value={"/","/loginAction"})
 	public String login(
 			@ModelAttribute UserDTO userDTO,
 			Model model,
@@ -43,8 +42,9 @@ public class UserController {
 		try {
 			UserDTO userInfo = userService.getUser(userDTO);
 			log.info(userInfo.toString());
-			
+			log.info("🦢🦢🦢🦢🦢🦢🦢🦢🦢🦢🦢🦢");
 			session.setAttribute("userInfo", userInfo);
+			log.info("🦢🦢🦢🦢🦢🦢🦢🦢🦢🦢🦢🦢");
 			return "redirect:../board";
 		} catch (Exception e) {
 			log.info(e.getMessage());
@@ -54,8 +54,9 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("/logout")
+	@RequestMapping("/logout")
 	public ModelAndView logout(HttpSession session) {
+		log.info("logout 수행 중.............");
 		UserDTO userInfo = (UserDTO) session.getAttribute("userInfo");
 		session.invalidate();
 		
@@ -66,5 +67,19 @@ public class UserController {
 		return mav;
 	}
 	
+	@RequestMapping("/logout2")
+	public String logout2() {
+		log.info("logout 수행 중.............");
+		
+		return "user/logout";
+	}
+	@GetMapping("/login_error")
+	public String login_error(HttpSession session, Model model) {
+		
+		model.addAttribute("msg","아이디 혹은 비밀번호가 틀립니다.");
+		model.addAttribute("url", "./");
+		return "result";
+	}
+
 	
 }

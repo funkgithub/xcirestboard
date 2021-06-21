@@ -47,8 +47,6 @@ public class BoardServiceImpl implements BoardService {
 	public void insertArticle(ArticleDTO articleDTO) throws Exception {
 		try {
 			boardDAO.insertArticle(articleDTO);
-			if (true) throw new RuntimeException("테스트 예외상황 발생!!!");
-			boardDAO.insertArticle(articleDTO);
 		} catch(Exception e) {
 			log.info(e.getMessage());
 			throw e;

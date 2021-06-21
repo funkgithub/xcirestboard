@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:jdbc-user-service data-source-ref="dataSource" />
+			<security:password-encoder  ref="passwordEncoder"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<security:http use-expressions="true">
+		<security:csrf disabled="true" />
+
+		<security:intercept-url pattern="/user/**"    access="permitAll" />
+		<security:intercept-url pattern="/admin/**"   access="hasAuthority('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/manager/**" access="hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')" />
+		<security:intercept-url pattern="/member/**"  access="isAuthenticated()" />
+		<security:intercept-url pattern="/**"         access="permitAll"/>
+		<security:logout 
+			logout-url="/user/log_out"	
+			logout-success-url="/user/logout2"		
+			invalidate-session="true"
+			delete-cookies="true"
+		/>
+		
+		<security:form-login
+			username-parameter="usr_id"
+			password-parameter="usr_pw"
+			
+			login-page="/user/"
+			login-processing-url="/user/loginAction"
+			default-target-url="/board/"
+			authentication-failure-url="/user/login_error"
+		/>
+		
+	</security:http>
+	
+		
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<!-- 
+			<security:user-service>
+				<security:user name="user1" password="1111" 
+				          authorities="ROLE_USER" />
+				<security:user name="manager1" password="1111" 
+				          authorities="ROLE_MANAGER" />
+				<security:user name="admin1" password="1111" 
+				          authorities="ROLE_ADMIN,ROLE_USER" />
+			</security:user-service>
+			-->
+			
+			<security:jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="SELECT  usr_id     as username
+				                                ,usr_pw     as password
+				                                ,usr_status as enabled
+                                         FROM t_user WHERE usr_id=?"
+                authorities-by-username-query="SELECT usr_id as username
+                                                     ,CASE WHEN usr_level=3 THEN 'ROLE_ADMIN'
+                                                           WHEN usr_level=2 THEN 'ROLE_MANAGER'
+                                                                            ELSE 'ROLE_USER' END as authority
+                                                     ,usr_info
+                                                     ,usr_name
+                                               FROM t_user WHERE usr_id=?"
+			/>
+			<security:password-encoder ref="passwordEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+</beans>

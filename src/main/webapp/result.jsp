@@ -9,8 +9,8 @@
 </head>
 <body>
 <script type="text/javascript">
-alert('${msg}');
-location.href='${url}';
+alert('<%=request.getParameter("msg")%>');
+location.href='<%=request.getParameter("url")%>';
 </script>
 </body>
 </html>
